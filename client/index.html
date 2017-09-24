@@ -2,12 +2,53 @@
 <html lang="en">
 <head>
     <script src="https://npmcdn.com/babel-core@5.8.38/browser.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <script type="text/babel" >
         "use strict";
+
+        let socket;
+
+        const init = () => {
+          socket = io.connect();
+          
+          setupSocket();
+          
+          setInterval(sendMessage, 3000); 
+        };
+        
+        window.onload = init;
+
+        const setupSocket = () => {
+          
+          socket.emit('join', {});
+          
+          socket.on('increasePara', (data) => {
+            console.log(data);
+            const message = data.message;
+            document.querySelector("#myPara").innerHTML = message;
+          });
+
+          socket.on('clearPara', (data) => {
+            document.querySelector("#myPara").innerHTML = "";
+          });
+        };
+        
+        let myNum = 0;
+
+        const sendMessage = () => {
+          myNum += 5;
+          
+          let messageData = {
+            message: `The current value is ${myNum}`,
+          };
+          
+          socket.emit('updatePara', messageData);
+          console.log(messageData);
+        };
     
     </script>
 </head>
 <body>
-
+<p id="myPara">The current value is 0</p>
 </body>
 </html>
