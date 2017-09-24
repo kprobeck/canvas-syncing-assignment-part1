@@ -23,7 +23,7 @@ const onJoined = (sock) => {
   const socket = sock;
 
   socket.on('join', (data) => {
-
+    console.log(data);
     socket.join('room1');
   });
 };
