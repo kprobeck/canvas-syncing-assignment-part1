@@ -24,7 +24,9 @@ const onJoined = (sock) => {
 
   socket.on('join', (data) => {
     let joined = data.joined;
-    socket.join('room1');
+    if(joined) {
+      socket.join('room1');
+    }
   });
 };
 

@@ -20,7 +20,7 @@
 
         const setupSocket = () => {
           
-          socket.emit('join', {});
+          socket.emit('join', {'joined': true});
           
           socket.on('increasePara', (data) => {
             console.log(data);
